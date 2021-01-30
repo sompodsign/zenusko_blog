@@ -126,3 +126,15 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+
+# LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/account/login'
+LOGOUT_URL = '/logout'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': 'auto',
+
+    },
+}
