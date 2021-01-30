@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog{% endblock %}
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/blog/style.css' %}">
+ <!-- Page Header -->
+ <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>BLOG</h1>
+          <span class="subheading">Thoughts of mind</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+{% block content %}
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {% for post in posts %}
+      <div class="post-preview">
+        <a href="{{ post.get_absolute_url }}">
+          <h2 class="post-title">
+            {{ post.title }}
+          </h2>
+          <h3 class="post-subtitle">
+            {{ post.subheading }}
+          </h3>
+        </a>
+
+
+        <p class="post-meta">{% if post.update %}Updated by{% else %}Posted by{% endif %}
+          <a href="#">{{ post.author }}</a>
+          on {% if post.update %}{{ post.updated }}{% else %}{{ post.publish }}{% endif %}
+            {% if post.author == request.user %}
+            <a href="{% url "blog:edit_post" post.id %}">✍️</a>
+            <a href="{% url "blog:delete_post" post.id %}">❌</a>
+            {% endif %}
+        </p>
+
+
+      </div>
+      <hr color="#ea3a60">
+      
+     {% endfor %}
+
+      {% include 'blog/pagination.html' with page=posts %}
+
+
+    </div>
+  </div>
+</div>
+
+<hr>
+
+
+
+{% endblock %}

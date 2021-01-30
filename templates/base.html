@@ -1,0 +1,198 @@
+{% load static %}
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="{% static 'Images/fav.png' %}" />
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'stylesheets/style-starter.css' %}">
+  <link rel="stylesheet" href="{% static 'stylesheets/font-awesome.min.css' %}">
+  <!-- web fonts -->
+  <link href="//fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+    rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+  <!-- /web fonts -->
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  <div class="container">
+    <!-- header -->
+    <header class="w3l-header">
+      <div class="hero-header-11">
+        <div class="hero-header-11-content">
+
+          <nav class="navbar navbar-expand-xl navbar-light py-sm-2 py-1 px-0">
+            <a class="navbar-brand editContent" href="{% url 'blog:post_list' %}">Zenusko</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'blog:post_list' %}">Blog<span class="sr-only">(current)</span></a>
+                </li>
+              <li>
+                      <a class="dropdown-item" href="{% url 'blog:post_list' %}">ALL POSTS</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'blog:post_article' %}">NEW POST</a>
+                    </li>
+
+
+                  </ul>
+
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Hi, {{ request.user.first_name }}</a>
+                  <ul class="dropdown-menu">
+                       <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account:account' %}">My account</a>
+                </li>
+                    <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+                </li>
+                  </ul>
+                </li>
+                </li>
+                {% endif %}
+
+
+
+
+            </div>
+          </nav>
+        </div>
+      </div>
+  </div>
+  </header>
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+
+  <!-- //contact -->
+  <!-- Footer -->
+  <footer class="w3l-footer">
+    <div id="footers14-block" class="py-3">
+      <div class="container">
+        <div class="footers14-bottom text-center">
+          <div class="social">
+            <a href="#" class="github"><span class="fa fa-github"
+                aria-hidden="true"></span></a>
+            <a href="mailto:sompod123@gmail.com" class="email"><span class="fa fa-send-o"
+                aria-hidden="true"></span></a>
+            <a href="#" class="twitter"><span class="fa fa-linkedin"
+                aria-hidden="true"></span></a>
+            <a href="#" class="instagram"><span class="fa fa-instagram"
+                aria-hidden="true"></span></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Go to top">
+      <span class="fa fa-angle-up" aria-hidden="true"></span>
+    </button>
+    <script>
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        scrollFunction()
+      };
+
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("movetop").style.display = "block";
+        } else {
+          document.getElementById("movetop").style.display = "none";
+        }
+      }
+
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+    <!-- /move top -->
+
+  </footer>
+  <!-- Footer -->
+
+  <!-- jQuery and Bootstrap JS -->
+  <script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  <!-- Template JavaScript -->
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script>
+    $(document).ready(function () {
+      $('.popup-with-zoom-anim').magnificPopup({
+        type: 'inline',
+
+        fixedContentPos: false,
+        fixedBgPos: true,
+
+        overflowY: 'auto',
+
+        closeBtnInside: true,
+        preloader: false,
+
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in'
+      });
+
+      $('.popup-with-move-anim').magnificPopup({
+        type: 'inline',
+
+        fixedContentPos: false,
+        fixedBgPos: true,
+
+        overflowY: 'auto',
+
+        closeBtnInside: true,
+        preloader: false,
+
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-slide-bottom'
+      });
+    });
+  </script>
+
+  <!-- disable body scroll which navbar is in active -->
+  <script>
+    $(function () {
+      $('.navbar-toggler').click(function () {
+        $('body').toggleClass('noscroll');
+      })
+    });
+  </script>
+  <!-- disable body scroll which navbar is in active -->
+
+
+  <script src="{% static 'js/smartphoto.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const sm = new SmartPhoto(".js-img-viwer", {
+        showAnimation: false
+      });
+      // sm.destroy();
+    });
+  </script>
+
+
+</body>
+
+</html>

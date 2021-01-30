@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ post.title }}{% endblock %}
+<link rel="stylesheet" href="{% static 'blog/style.css' %}">
+
+{% block nav %}
+<!-- Page Header -->
+<link rel="stylesheet" href="{% static 'stylesheets/blog/style.css' %}">
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.subheading }}</h2>
+          <span class="meta">{% if post.update %}Updated by{% else %}Posted by{% endif %}
+          <a href="#">{{ post.author }}</a>
+          on {% if post.update %}{{ post.updated }}{% else %}{{ post.publish }}{% endif %}
+            {% if post.author == request.user %}
+            <a href="{% url "blog:edit_post" post.id %}">✍️</a>
+            <a href="{% url "blog:delete_post" post.id %}">❌</a>
+            {% endif %}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {{ post.body|safe }}
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr>
+<br>
+{% with comments.count as total_comments %}
+<h3>
+    {{ total_comments }} comment{{total_comments|pluralize }}
+</h3>
+{% endwith %}
+{% for comment in comments %}
+<div>
+    <p>
+        <em>Comment {{ forloop.counter }} by {{ comment.name }}
+          {{ comment.created }}</em>
+    </p>
+    {{ comment.body|linebreaks }}
+  <hr color="#ea3a60">
+</div>
+{% empty %}
+<p>There are no comments yet.</p>
+{% endfor %}
+
+{% if messages %}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {% for message in messages %}
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {% endfor %}
+</div>
+
+{% endif %}
+{% if new_comment %}
+<h3>Add a new comment</h3>
+{% endif %}
+<form class="form-group" method="post">
+  {% csrf_token %}
+{{ comment_form.as_p }}
+  <button class="btn btn-primary" type="submit">Add a comment</button>
+  </form>
+{% endblock %}

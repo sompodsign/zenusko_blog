@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit post{% endblock %}
+
+{% block nav %}
+<link rel="stylesheet" href="{% static 'stylesheets/blog/style.css' %}">
+ <!-- Page Header -->
+ <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>EDIT POST</h1>
+          <span class="subheading">{{ post.title }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+{% block content %}
+
+<!-- Main Content -->
+<div class="container">
+<div class="form-group">
+<form method="post">
+    {% csrf_token %}
+    {{ edit_post_form.media }}
+{{ edit_post_form.as_p }}
+<input class="btn btn-primary" type="submit" value="Edit">
+</form>
+    </div>
+<hr>
+
+
+</div>
+{% endblock %}

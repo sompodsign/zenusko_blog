@@ -1,0 +1,57 @@
+
+{% load static %}
+<head>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="{% static 'stylesheets/signin.css' %}">
+<title>Login</title>
+</head>
+<body>
+<div class="container">
+  <div class="card card-container">
+
+  {% if messages %}
+  {% for message in messages %}
+<div {% if message.tags == 'success' %}class="alert alert-success"
+     {% else %} class = "alert alert-warning"
+     {% endif %} role="alert">
+{{ message }}
+</div>
+  {% endfor %}
+  {% endif %}
+
+  {% if 'next' in request.GET %}
+
+  <div class="alert alert-info">You need to login the to view the page.</div>
+
+  {% endif %}
+
+
+
+      <img id="profile-img" class="profile-img-card" src="{% static 'Images/login.png' %}" />
+      <p id="profile-name" class="profile-name-card"></p>
+      <form class="form-signin" method="post">
+          {%  csrf_token %}
+          <span id="reauth-email" class="reauth-email"></span>
+          <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Email or username" required autofocus>
+          <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" name="remember" value="remember-me"> Remember me
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+      </form><!-- /form -->
+      <a href="{% url 'password_reset' %}" class="forgot-password">
+          Forgot the password?
+      </a>
+      <a href="{% url 'account:register' %}" class="signup">
+          Sign up
+      </a>
+  </div><!-- /card-container -->
+</div><!-- /container -->
+<script src="{% static 'js/signin.js' %}"></script>
+</body>
