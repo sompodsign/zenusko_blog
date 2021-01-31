@@ -43,9 +43,8 @@ def post_list(request, tag_slug=None):
         # if page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
     return render(request,
-                  'blog/list.html',
-                  {'page': page,
-                   'posts': posts,
+                  'blog/post_list.html',
+                  {'posts': posts,
                    'tag': tag})
 
 
@@ -102,7 +101,7 @@ def post_detail(request, year, month, day, post):
     else:
         comment_form = CommentForm()
     return render(request,
-                  'blog/detail.html',
+                  'blog/post_detail.html',
                   {'post': post,
                    'comments': comments,
                    # 'new_comment': new_comment,
@@ -155,3 +154,8 @@ def delete_post(request, id):
             return redirect("blog:post_list")
     else:
         return redirect('blog:post_list')
+
+
+
+def contact(request):
+    return render(request, 'blog/contact.html')
