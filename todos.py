@@ -1,1 +1,2 @@
-# TODO 1: Will implement celery in password reset system.
+# TODO 1: Add password reset whole system in the modal.
+# TODO 2: Fix comment system.

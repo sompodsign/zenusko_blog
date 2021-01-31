@@ -78,10 +78,18 @@ def post_share(request, post_id):
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
-                             status='published',
+                             # status="published",
                              publish__year=year,
                              publish__month=month,
                              publish__day=day)
+    if request.user.is_authenticated and request.user == post.author:
+        post = post
+    else:
+        post = get_object_or_404(Post, slug=post,
+                                 status="published",
+                                 publish__year=year,
+                                 publish__month=month,
+                                 publish__day=day)
     # list of active comments for this post
     comments = post.comments.filter(active=True)
     new_comment = None
@@ -154,7 +162,6 @@ def delete_post(request, id):
             return redirect("blog:post_list")
     else:
         return redirect('blog:post_list')
-
 
 
 def contact(request):
