@@ -76,20 +76,24 @@ def post_share(request, post_id):
         'sent': sent, })
 
 
-def post_detail(request, year, month, day, post):
-    post = get_object_or_404(Post, slug=post,
-                             # status="published",
-                             publish__year=year,
-                             publish__month=month,
-                             publish__day=day)
+def post_find(request, y, m, d, p):
+    post = get_object_or_404(Post, slug=p,
+                             publish__year=y,
+                             publish__month=m,
+                             publish__day=d)
     if request.user.is_authenticated and request.user == post.author:
-        post = post
+        return post
     else:
-        post = get_object_or_404(Post, slug=post,
+        post = get_object_or_404(Post, slug=p,
                                  status="published",
-                                 publish__year=year,
-                                 publish__month=month,
-                                 publish__day=day)
+                                 publish__year=y,
+                                 publish__month=m,
+                                 publish__day=d)
+        return post
+
+
+def post_detail(request, year, month, day, post):
+    post = post_find(request, year, month, day, post)
     # list of active comments for this post
     comments = post.comments.filter(active=True)
     new_comment = None
