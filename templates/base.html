@@ -39,27 +39,38 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url "blog:post_list" %}">Home</a>
           </li>
+        {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url "blog:post_article" %}">New Post</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="{% url "blog:author_posts" %}">My Posts</a>
           </li>
+        {% endif %}
+{#            <li class="nav-item">#}
+{#            <a class="nav-link" href="about.html">About</a>#}
+{#          </li>#}
           <li class="nav-item">
             <a class="nav-link" href="{% url "blog:contact" %}">Contact</a>
           </li>
-{#            <li class="nav-item">#}
-{#            <a class="nav-link" href="{% url "account:login" %}">Login</a>#}
-{#          </li>#}
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+            <a type="button" class="nav-link"
+               href="{% url "account:login" %}">Login</a>
+          </li>
+                {% else %}
+                <li class="nav-item">
+            <a class="nav-link" href="{% url "account:logout" %}">Logout</a>
+          </li>
+            {% endif %}
         </ul>
       </div>
     </div>
   </nav>
 
 
+
   {% block content %}
-
-
   {% endblock %}
 
 

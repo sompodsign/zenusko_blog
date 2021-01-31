@@ -159,3 +159,12 @@ def delete_post(request, id):
 
 def contact(request):
     return render(request, 'blog/contact.html')
+
+
+@login_required
+def author_posts(request):
+    author = request.user
+    posts = Post.objects.filter(author=author)
+    return render(request,
+                  'blog/author_posts.html',
+                  {'posts': posts})

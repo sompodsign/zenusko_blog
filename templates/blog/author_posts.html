@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Posts{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{% static "img/home-bg.jpg" %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Zenusko blog</h1>
+            <span class="subheading">All of my posts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in posts %}
+      <div class="post-preview">
+        <a href="{{ post.get_absolute_url }}">
+          <h3 class="post-subtitle">
+            {{ post.title }}
+          </h3>
+        </a>
+        <p class="post-meta">{% if post.update %}Updated on{% else %}Posted on{% endif %}
+          on {% if post.update %}{{ post.updated }}{% else %}{{ post.publish }}{% endif %}
+            {% if post.author == request.user %}
+            <a href="{% url "blog:edit_post" post.id %}">✍️</a>
+            <a href="{% url "blog:delete_post" post.id %}">❌</a>
+            {% endif %}
+        </p>
+        </div>
+      {% endfor %}
+        <!-- Pager -->
+{#        <div class="clearfix">#}
+{#          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>#}
+{#        </div>#}
+
+
+{#{% include 'blog/pagination.html' %}#}
+{#<div class="clearfix">#}
+{#        {% if page.has_previous %}#}
+{#        <a class="btn btn-primary float-left" href="?page={{ page.previous_page_number }}">Previous</a>#}
+{#        {% endif %}#}
+{#    {% if page.has_next %}#}
+{#    <a class="btn btn-primary float-right" href="?page={{ page.next_page_number }}">Next</a>#}
+{#    {% endif %}#}
+{#</div>#}
+
+{#<div class="clearfix">#}
+{#        {% if posts.has_previous %}#}
+{#        <a class="btn btn-primary float-left"  href="?page={{ posts.previous_page_number }}">Latest Posts</a>#}
+{#        {% endif %}#}
+{#    {% if posts.has_next %}#}
+{#    <a class="btn btn-primary float-right" href="?page={{ posts.next_page_number }}">Older Posts</a>#}
+{#    {% endif %}#}
+{#</span>#}
+{#</div>#}
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+{% endblock %}
