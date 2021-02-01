@@ -169,6 +169,9 @@ def delete_post(request, id):
 
 
 def contact(request):
+    if request.method == "POST":
+        messages.success(request, "I've received your message. I'll contact you as soon as possible.")
+        return redirect('blog:contact')
     return render(request, 'blog/contact.html')
 
 
