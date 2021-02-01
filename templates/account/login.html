@@ -1,16 +1,12 @@
+{% extends "account/account_base.html" %}
 
 {% load static %}
-<head>
+{% block title %}Login{% endblock %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="{% static 'css/signin.css' %}">
-<title>Login</title>
-</head>
-<body>
-<div class="container">
+
+{% block content %}
+
+    <div class="container">
   <div class="card card-container">
 
   {% if messages %}
@@ -28,8 +24,6 @@
   <div class="alert alert-info">You need to login the to view the page.</div>
 
   {% endif %}
-
-
 
       <img id="profile-img" class="profile-img-card" src="{% static 'img/login.png' %}" />
       <p id="profile-name" class="profile-name-card"></p>
@@ -53,5 +47,5 @@
       </a>
   </div><!-- /card-container -->
 </div><!-- /container -->
-<script src="{% static 'js/signin.js' %}"></script>
-</body>
+
+{% endblock %}
